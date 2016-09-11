@@ -14,14 +14,13 @@ request("https://translate.yandex.net/api/v1.5/tr.json/getLangs?key="+apiKey, fu
 
 function printInLang(lang) {
   if(!lang) return;
-  var data = querystring.stringify({ "lang": "en-be", "text": "Hello World"});
-  console.log("printing "+lang);
+  var data = querystring.stringify({ "lang": lang, "text": "Hello World"});
   request.post({ url: 'https://translate.yandex.net/api/v1.5/tr.json/translate?key='+apiKey,
     body: data,
     headers: {"Content-Type": "application/x-www-form-urlencoded", "Content-Length": data.length}},
     function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        console.log(body);
+        console.log(JSON.parse(body)["text"][0]);
       }
     }
   );
