@@ -1,7 +1,10 @@
-require("fs); //for reading api key
+require('fs'); //for reading api key
 var request = require('request');
 var apiKey = fs.readFileSync('apiConfig', 'utf8');
-if(!apiKey) console.log('failed to read api key');
+if(!apiKey) {
+  console.log('failed to read api key');
+  process.exit(1); //fail
+}
 
 request('http://www.google.com', function (error, response, body) {
   if (!error && response.statusCode == 200) {
