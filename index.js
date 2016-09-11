@@ -1,5 +1,5 @@
-require('fs'); //for reading api key
-var request = require('request');
+var fs = require('fs'); //for reading api key
+var request = require('request'); //simple api query
 var apiKey = fs.readFileSync('apiConfig', 'utf8');
 if(!apiKey) {
   console.log('failed to read api key');
