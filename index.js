@@ -1,10 +1,14 @@
 var fs = require('fs'); //for reading api key
 var request = require('request'); //simple api query
 const apiKey = readApiKey();
-const allLangs = getLangs();
 
-allLangs.forEach( function (val) {
-
+request("https://translate.yandex.net/api/v1.5/tr.json/getLangs?key="+apiKey, function (error, response, body) {
+  if (!error && response.statusCode == 200) {
+    allLangs = JSON.parse(body)["dirs"];
+    allLangs.forEach( function (val) {
+      printInLang(val);
+    });
+  }
 });
 
 function printInLang( lang) {
@@ -13,17 +17,6 @@ function printInLang( lang) {
       console.log(body);
     }
   });
-}
-
-function getLangs()
-{
-  var langs = [];
-  request("https://translate.yandex.net/api/v1.5/tr.json/getLangs?key="+apiKey, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      langs = JSON.parse(body)["dirs"];
-    }
-  });
-  return langs;
 }
 
 function readApiKey() {
